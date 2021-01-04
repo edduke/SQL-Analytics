@@ -30,8 +30,7 @@ ON a.id = b.user_id
 
 #Count the number of viewed_items as events. If we used a regualr COUNT it would have given us an answer, however with count distinct we have the exact count of unique values. 
 
-Select 
-count (distinct event_id) as events 
+Select count (distinct event_id) as events 
 from Events 
 Where event_name = 'view_item'
 
