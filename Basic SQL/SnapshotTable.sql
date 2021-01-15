@@ -1,5 +1,6 @@
 #Snapshot table is a useful way to segment users into useful groups for analysis. good tool to get pre event data. 
 
+#Firstly create a the user table
 
 CREATE TABLE IF NOT EXISTS user_info
 (
@@ -18,7 +19,7 @@ DESCRIBE user_info;
 INSERT INTO user_info 
 
 
-{% assign ds = '2021-01-15' %}
+{% assign ds = '2021-01-15' %}   #Fun function to def a assign date to a variable 
 Select
 id AS user_id
 IF(users.created_at = '{{ds}}' , 1,0) AS created_today,
@@ -36,6 +37,7 @@ FROM
 orders
 WHERE
 created_at <= '{{ds}}' 
+AND '{{ds}}' >= date_add(CURDATE(), INTERVAL -1 month)   #Partitioning your data by date will safe processing and time, helps to avoid a full table scan 
 ) users_with_orders
 ON 
 users_with_orders.user_id = users.id 
@@ -47,6 +49,7 @@ FROM
 orders
 WHERE
 created_at = {{ds}}
+ AND '{{ds}}' >= date_add(CURDATE(), INTERVAL -1 month)
 ) users_with_orders_today
 ON
 users_with_orders_today.user.id = users.id
@@ -57,3 +60,4 @@ users.created_ at <= '{{ds}}'
 from users
 where
 created_at <= '{{ds}}'
+AND '{{ds}}' >= date_add(CURDATE(), INTERVAL -1 month)
