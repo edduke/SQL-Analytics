@@ -38,7 +38,7 @@ Where event_name = 'view_item'
 #Count the number of items that have beeen ordered
 
 SELECT Count(distinct item_id) as item count
-from order as 
+from order 
 
 
 #Find out if a user made an order, when was the first purchase. 
