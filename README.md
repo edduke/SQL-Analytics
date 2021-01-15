@@ -1,2 +1,2 @@
-# SQL Basics Analytics 
+# SQL Analytics 
 
