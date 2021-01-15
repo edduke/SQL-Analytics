@@ -61,3 +61,20 @@ from users
 where
 created_at <= '{{ds}}'
 AND '{{ds}}' >= date_add(CURDATE(), INTERVAL -1 month)
+
+
+
+#This is a query for a quick business question of 'how many users have ordered a skateboard'
+SELECT
+orders.item_category,  #Adding something extra to anticipate follow up questions
+COUNT(DISTINCT 
+      COALESCE(parent_user_id, user_id)) as users_with_orders   #To avoid duplicate users incase you dont want to count both parent and user
+               From 
+               Orders
+               Join
+               Users
+               On
+               users.id = orders.user_id
+               WHERE orders.item_category = 'skateboard'
+               GROUP BY orders.item_category 
+
